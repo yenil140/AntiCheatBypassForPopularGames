@@ -24,3 +24,12 @@ if game.PlaceId == 301549746 then
 		return oldNamecall(self,unpack(Arguments))
 	end)
 end
+
+if game.PlaceId == 2768379856 then
+       coroutine.resume(coroutine.create(function()
+       loadstring(game:HttpGet('https://raw.githubusercontent.com/ilovedogs1235/Testing/main/scp-3008-one'))()
+    end))
+       coroutine.resume(coroutine.create(function()
+       loadstring(game:HttpGet('https://raw.githubusercontent.com/ilovedogs1235/Testing/main/scp-3008-two'))()
+    end))
+end
