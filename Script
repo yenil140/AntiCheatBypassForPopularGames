@@ -26,10 +26,63 @@ if game.PlaceId == 301549746 then
 end
 
 if game.PlaceId == 2768379856 then
-       coroutine.resume(coroutine.create(function()
-       loadstring(game:HttpGet('https://raw.githubusercontent.com/ilovedogs1235/Testing/main/scp-3008-one'))()
-    end))
-       coroutine.resume(coroutine.create(function()
-       loadstring(game:HttpGet('https://raw.githubusercontent.com/ilovedogs1235/Testing/main/scp-3008-two'))()
-    end))
+	coroutine.resume(coroutine.create(function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ilovedogs1235/Testing/main/scp-3008-one'))()
+	end))
+	coroutine.resume(coroutine.create(function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ilovedogs1235/Testing/main/scp-3008-two'))()
+	end))
+end
+
+if game.PlaceId == 13822889 then
+	-- Version Check
+	local Anticheat_Version = 38c8ecdd043ddac9078c5accdcf51ceca1eda9c33f696b175bb039a73478aa4506afbab775980dbe3400c6dd6a7048cd
+	if getscripthash(gameGetService(Players).LocalPlayer.PlayerGui.LoadSaveGUI.LoadSaveClient.LocalScript) ~= Anticheat_Version then
+		print(Anticheat Updated)
+		return
+	end
+	-- BypassCounter
+	local Bypass_Count = 0
+	-- Remote Deletion Bypass
+	if gameGetService(ReplicatedStorage).InteractionFindFirstChild(Ban) then
+		for _, v in next, getconnections(gameGetService(ReplicatedStorage).Interaction.Ban.AncestryChanged) do
+			if pcall(function()
+					vDisable()
+				end) then
+				Bypass_Count++
+					print(Disabled AncestryChanged Connection On Ban Remote)
+			end
+		end
+	end
+	-- Destroy Ban Remote
+	if pcall(function()
+			if Bypass_Count == 0 then return end -- prevent ban
+			gameGetService(ReplicatedStorage).Interaction.BanDestroy()
+		end) then
+		Bypass_Count++
+			print(Destroyed Ban Remote)
+	end
+	local Anticheat_Env = getsenv(gameGetService(Players).LocalPlayer.PlayerGui.LoadSaveGUI.LoadSaveClient.LocalScript)
+	-- Hook Ban Function
+	hookfunction(Anticheat_Env.ban, function(...)
+		wait(9e9)
+	end)
+	print(Hooked Ban Function)
+	-- AntiKick  AntiLog
+	local __namecall
+	__namecall = hookmetamethod(game, __namecall, newcclosure(function(...)
+		if tostring(...) == 'AddLog' then
+			wait(9e9)
+		end
+		if getnamecallmethod() == 'Kick' then
+			wait(9e9)
+		end
+		if tostring(...) == 'Ban' then
+			wait(9e9)
+		end
+		return __namecall(...)
+	end))
+	print(Namecall Hooked)
+	-- Finished
+	warn('Successfully Bypassed Anticheat')
 end
